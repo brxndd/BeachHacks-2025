@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as the base image (non-Alpine)
-FROM node:18-slim AS builder
+FROM node:18 AS builder
 
 # Set the working directory in the container 
 WORKDIR /app 
