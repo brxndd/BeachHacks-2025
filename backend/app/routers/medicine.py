@@ -1,4 +1,4 @@
-# app/routers/home.py
+# app/routers/medicine.py
 from fastapi import APIRouter
 
 router = APIRouter()
