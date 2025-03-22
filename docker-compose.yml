@@ -1,6 +1,19 @@
 version: "3.8"
 
 services:
+  
+  # adding postgres database image using docker's preset
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=myapp
+    ports:
+      - "5432:5432"
+
   backend:
     build:
       context: ./backend
@@ -10,7 +23,10 @@ services:
     volumes:
       - ./backend:/app
     environment:
-      - ENV=production  # or any environment variables you need
+      - ENV=production  
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/myapp
+    depends_on:
+      - db
 
   frontend:
     build:
@@ -23,3 +39,6 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+
+volumes:
+  postgres_data:
