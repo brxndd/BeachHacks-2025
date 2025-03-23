@@ -16,13 +16,13 @@ export default function Home() {
               alt="Logo"
               width={150}
               height={150}
-              className="object-contain mt-32 md:mt-40 lg:mt-48 md:w-48 md:h-48 lg:w-56 lg:h-56 animate-heartbeat"
+              className="object-contain h-screen md:w-48 md:h-48 lg:w-56 lg:h-56 animate-heartbeat overflow-hidden"
             />
           </div>
 
           <div className="text-[#8a2929] flex justify-center items-center flex-col ">
             <h1 className="text-5xl font-bold mt-8 md:text-6xl lg:text-7xl">HEART2HEART </h1>
-            <p className="text-xl mb-32 italic">Small Steps, Big Impact</p>
+            <p className="text-xl mb-4 italic">Small Steps, Big Impact</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
