@@ -56,7 +56,8 @@ export default function Questionnaire() {
 
     try {
       // Validate age input
-      if (age < 18 || age > 100) {
+      const ageInt = parseInt(age, 10);
+      if (ageInt < 18 || ageInt > 100) {
         setError('Age must be between 18 and 100.');
         return;
       }
@@ -69,10 +70,10 @@ export default function Questionnaire() {
         },
         body: JSON.stringify({
           name: name,
-          age: parseInt(age), // Convert to integer
-          conditions: selectedConditions, // Send selected conditions
-          race: race, // Send selected race
-          sex: sex, // Send selected sex
+          age: ageInt,
+          conditions: selectedConditions,  
+          race: race, 
+          sex: sex,
         }),
       });
 
@@ -103,15 +104,15 @@ export default function Questionnaire() {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto">
-      <h1 className="text-[#CA0808] text-3xl font-bold mb-6">Let's get to know you better!</h1>
+    <div className="mt-6 p-6 max-w-7xl mx-auto">
+      <h1 className="text-[#8a2929] text-3xl font-bold mb-6">Let's get to know you better!</h1>
 
       {/* Form for user input */}
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-6">
           {/* Name Field */}
           <div className="flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="name">
+            <label className="text-[#8a2929] font-semibold mb-2" htmlFor="name">
               What's your name?
             </label>
             <input
@@ -120,14 +121,14 @@ export default function Questionnaire() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CA0808]"
+              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
               placeholder="Answer here"
             />
           </div>
 
           {/* Age Field */}
           <div className="flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="age">
+            <label className="text-[#8a2929] font-semibold mb-2" htmlFor="age">
               What's your age?
             </label>
             <input
@@ -136,7 +137,7 @@ export default function Questionnaire() {
               value={age}
               onChange={(e) => setAge(e.target.value)}
               required
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CA0808]"
+              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
               placeholder="Answer here"
               min="18"
               max="100"
@@ -146,14 +147,14 @@ export default function Questionnaire() {
 
           {/* Race Dropdown */}
           <div className="flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="race">
+            <label className="text-[#8a2929] font-semibold mb-2" htmlFor="race">
               Race
             </label>
             <select
               id="race"
               value={race}
               onChange={(e) => setRace(e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CA0808]"
+              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
               required
             >
               <option value="" disabled>Select your race</option>
@@ -167,14 +168,14 @@ export default function Questionnaire() {
 
           {/* Sex Dropdown */}
           <div className="flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="sex">
+            <label className="text-[#8a2929] font-semibold mb-2" htmlFor="sex">
               Sex
             </label>
             <select
               id="sex"
               value={sex}
               onChange={(e) => setSex(e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CA0808]"
+              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
               required
             >
               <option value="" disabled>Select your sex</option>
@@ -188,7 +189,7 @@ export default function Questionnaire() {
 
           {/* Condition Checklist */}
           <div className="flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2">
+            <label className="text-[#8a2929] font-semibold mb-2">
               Select your conditions:
             </label>
             {conditions.map((condition, index) => (
@@ -213,9 +214,9 @@ export default function Questionnaire() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300 w-full md:w-auto"
+            className="bg-[#8a2929] text-white px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300 w-full md:w-auto"
           >
-            Continue
+            Submit
           </button>
         </div>
       </form>

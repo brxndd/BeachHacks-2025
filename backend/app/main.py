@@ -7,7 +7,7 @@ from app.models import User
 from app.utils import get_password_hash, verify_password
 from app.routers import home, chatbot, medicine, todo  # importing all routers
 
-# Create app instance 
+# creating app instance 
 app = FastAPI()
 
 # Consolidated CORS middleware configuration
@@ -26,28 +26,28 @@ app.include_router(medicine.router)
 app.include_router(todo.router)
 
 
-# pydantic model
-"""
-    FORM will track:
-    - Name 
-    - Age
-    - Biological Sex 
-    - Race 
-    - Conditions 
-"""
-
+#input for questionnaire
 class UserInput(BaseModel):
+    
+    """
+        FORM will track:
+        - Name 
+        - Age
+        - Biological Sex 
+        - Race 
+        - Conditions 
+    """
     name: str 
-    age: int 
+    age: int
     sex: str 
     race: str     
-    condition: str 
-
+    conditions: List[str]
 
 # New authentication models
 class UserLogin(BaseModel):
     email: str
     password: str
+    conditions: List[str]
 
 class UserSignUp(BaseModel):
     email: str
@@ -57,6 +57,7 @@ class UserSignUp(BaseModel):
 # Original endpoints
 @app.get("/")
 async def root():
+
     return {"message": "Root!"}
 
 @app.post("/form/")
