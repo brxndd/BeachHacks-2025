@@ -1,10 +1,11 @@
 "use client";
-
+import { useEffect } from "react";
+import { useSession } from "next-auth/react"
 import { useState } from "react";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
-/** Represents a medication (or event) entry in the calendar. */
+/** Represents a medicine (or event) entry in the calendar. */
 interface CalendarEvent {
   id: number;
   title: string;
@@ -13,9 +14,33 @@ interface CalendarEvent {
 }
 
 export default function CalendarPage() {
-  // ------------------------------
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status !== "authenticated" || !session?.user?.id) return;
+  
+    const fetchReminders = async () => {
+      try {
+        const res = await fetch(`http://localhost:8000/notifications/${session.user.id}`);
+        const data = await res.json();
+  
+        const formattedEvents = data.map((item: any) => ({
+          id: item.id,
+          title: item.med_string,
+          time: item.time_to_take.slice(0, 5),
+          date: item.date,
+        }));
+  
+        setEvents(formattedEvents);
+      } catch (err) {
+        console.error("Failed to load events:", err);
+      }
+    };
+  
+    fetchReminders();
+  }, [session, status]);
+
   // STATE
-  // ------------------------------
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   
   // Current visible month/year
@@ -35,20 +60,19 @@ export default function CalendarPage() {
 
   // For a user-friendly month name
   const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
   ];
 
-  // ------------------------------
-  // BUILD THE CALENDAR GRID (7x6)
-  // ------------------------------
+
+  // Build calendar (7x6)
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
   const firstDayWeekday = firstDayOfMonth.getDay();
 
   const calendarStart = new Date(firstDayOfMonth);
   calendarStart.setDate(firstDayOfMonth.getDate() - firstDayWeekday);
 
-  const totalCells = 42;
+  const totalCells = 42; 
   const calendarDays: Date[] = [];
   for (let i = 0; i < totalCells; i++) {
     const copy = new Date(calendarStart);
@@ -64,9 +88,8 @@ export default function CalendarPage() {
     return `${y}-${m}-${d}`;
   }
 
-  // ------------------------------
-  // EVENT HELPERS
-  // ------------------------------
+
+  // event helper functs
   function getEventsForDate(dateString: string) {
     return events.filter((ev) => ev.date === dateString);
   }
@@ -92,40 +115,8 @@ export default function CalendarPage() {
 
   function handleDeleteEvent(eventId: number) {
     setEvents((prev) => prev.filter((e) => e.id !== eventId));
-    // You may also want to call a DELETE endpoint on your backend here.
   }
 
-  // ------------------------------
-  // SAVE EVENT TO BACKEND
-  // ------------------------------
-  // Hard-code the user ID (in a real app, use the logged-in user's id)
-  const userId = 1;
-  
-  async function saveMedicationToDB(event: CalendarEvent) {
-    // Combine date and time to create a full timestamp.
-    // Here we assume the event.time is a string like "08:00" and event.date is "YYYY-MM-DD"
-    const timestamp = new Date(`${event.date}T${event.time}`);
-    const payload = {
-      med_string: event.title,
-      time: timestamp.toISOString(), // convert to UTC ISO format
-      users_id: userId,
-    };
-    try {
-      const response = await fetch("http://localhost:8000/medications", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
-      console.log("Medication saved:", data);
-    } catch (error) {
-      console.error("Error saving medication:", error);
-    }
-  }
-
-  // ------------------------------
-  // HANDLE SAVE EVENT (and push to DB)
-  // ------------------------------
   function handleSaveEvent() {
     if (!selectedDate || !newEventTitle.trim()) {
       setIsPopupOpen(false);
@@ -136,33 +127,45 @@ export default function CalendarPage() {
       const newEvent: CalendarEvent = {
         id: Date.now(),
         title: newEventTitle.trim(),
-        time: newEventTime,
+        time: newEventTime, // Save the time string
         date: selectedDate,
       };
       setEvents((prev) => [...prev, newEvent]);
-      // Send the new event data to the backend.
-      saveMedicationToDB(newEvent);
+
+    async function postToBackend() {
+      try {
+        await fetch("http://localhost:8000/notifications" ,{
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            med_string: newEventTitle.trim(),
+            time_to_take: newEventTime + ":00",
+            date: selectedDate,
+            users_id: session?.user?.id
+          })
+        })
+      } catch (err) {
+        console.error("Failed to save to backend:", err);
+        alert("Failed to sync with database.")
+      }
+    }
+
+    postToBackend();
+
     } else if (popupMode === "edit" && eventIdBeingEdited) {
-      const updatedEvent = {
-        id: eventIdBeingEdited,
-        title: newEventTitle.trim(),
-        time: newEventTime,
-        date: selectedDate,
-      };
       setEvents((prev) =>
         prev.map((ev) =>
-          ev.id === eventIdBeingEdited ? updatedEvent : ev
+          ev.id === eventIdBeingEdited
+            ? { ...ev, title: newEventTitle.trim(), time: newEventTime, date: selectedDate }
+            : ev
         )
       );
-      // Optionally, update the record in the database via a PUT request.
-      // For now, you can call saveMedicationToDB(updatedEvent) or create a separate update endpoint.
     }
     setIsPopupOpen(false);
   }
 
-  // ------------------------------
+
   // MONTH/YEAR NAVIGATION
-  // ------------------------------
   function handlePrevMonth() {
     let newMonth = currentMonth - 1;
     let newYear = currentYear;
@@ -195,9 +198,8 @@ export default function CalendarPage() {
 
   const displayMonthName = monthNames[currentMonth];
 
-  // ------------------------------
+  
   // RENDER
-  // ------------------------------
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <NavBar />
@@ -278,7 +280,9 @@ export default function CalendarPage() {
                 {/* Plus button for current month */}
                 {isCurrentMonth && (
                   <button
-                    className="absolute top-2 right-2 hidden group-hover:block text-[#CA0808] bg-white border border-[#CA0808] rounded-full w-5 h-5 flex items-center justify-center text-sm"
+                    className="absolute top-2 right-2 hidden group-hover:block 
+                               text-[#8a2929] bg-white border border-[#8a2929] 
+                               rounded-full w-5 h-5 flex items-center justify-center text-sm"
                     onClick={() => handleAddEvent(dateKey)}
                   >
                     +
