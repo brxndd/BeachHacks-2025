@@ -53,6 +53,7 @@ class UserSignUp(BaseModel):
 # Original endpoints
 @app.get("/")
 async def root():
+
     return {"message": "Root!"}
 
 @app.post("/form/")
@@ -88,3 +89,4 @@ async def signup(user_data: UserSignUp):
         "email": user_data.email,
         "name": user_data.name
     }
+
