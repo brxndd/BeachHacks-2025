@@ -1,30 +1,71 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function NavBar() {
+  const pathname = usePathname();
+
   return (
-    <nav className="bg-[#CA0808] border-gray-200">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+    <nav className="bg-[#CA0808] border-gray-200 h-16">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative h-full">
+        {/* Logo on left */}
+        <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse z-10">
           <Image
             src="/images/mini_logo.png"
             alt="Logo"
             width={32}
             height={32}
             className="h-8"
-          /> <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">Heart2Heart</span> </Link>
-        <div className="items-center justify-center hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
-            <li>
-              <Link href="/" className="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700" aria-current="page">Home</Link>
-            </li>
-            <li>
-              <Link href="/chatbot" className="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">Chatbot</Link>
-            </li>
-            <li>
-              <Link href="/tracker" className="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">Tracker</Link>
-            </li>
-          </ul>
+          />
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">Heart2Heart</span>
+        </Link>
+
+        {/* Centered Navigation Links */}
+        <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 h-full items-center space-x-8">
+          <Link 
+            href="/" 
+            className={`text-lg ${pathname === '/' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+          >
+            Home
+          </Link>
+          <Link 
+            href="/chatbot" 
+            className={`text-lg ${pathname === '/chatbot' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+          >
+            Chatbot
+          </Link>
+          <Link 
+            href="/medication" 
+            className={`text-lg ${pathname === '/medication' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+          >
+            Medication
+          </Link>
+          <Link 
+            href="/todo" 
+            className={`text-lg ${pathname === '/todo' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+          >
+            To-Do List
+          </Link>
+        </div>
+
+        {/* Auth Buttons on right */}
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex gap-4">
+          <Link
+            href="/signin"
+            className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
+                     hover:text-[#ff0000] transition-colors duration-200 shadow-sm
+                     hover:shadow-md"
+          >
+            Sign In
+          </Link>
+          <Link
+            href="/signup"
+            className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
+                     hover:text-[#ff0000] transition-colors duration-200 shadow-sm
+                     hover:shadow-md border-2 border-[#CA0808]"
+          >
+            Sign Up
+          </Link>
         </div>
       </div>
     </nav>
