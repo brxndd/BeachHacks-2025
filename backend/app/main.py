@@ -1,7 +1,11 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
+from app.database import get_db
+from app.models import User
+from app.utils import get_password_hash, verify_password
 from app.routers import home, chatbot, medicine, todo  # importing all routers
-from fastapi.middleware.cors import CORSMiddleware  # import middleware
 
 # Create app instance 
 app = FastAPI()
@@ -59,32 +63,66 @@ async def root():
 async def create_form(form: UserInput):
     return form
 
-# New authentication endpoints
+# Updated authentication endpoints with database integration
 @app.post("/login")
-async def login(credentials: UserLogin):
+async def login(credentials: UserLogin, db: Session = Depends(get_db)):
     """
-    NextAuth.js integration endpoint
-    Replace with your actual authentication logic
+    NextAuth.js integration endpoint with Neon.tech database
     """
-    # Demo validation - replace with database check
-    if credentials.email == "test@example.com" and credentials.password == "password":
-        return {
-            "id": 1,
-            "email": credentials.email,
-            "name": "Test User"
-        }
-    raise HTTPException(status_code=401, detail="Invalid credentials")
+    try:
+        # Find user by email
+        user = db.query(User).filter(User.email == credentials.email).first()
+        if not user:
+            raise HTTPException(status_code=401, detail="Invalid credentials")
 
-# Add proper error handling for duplicate emails
+        # Verify password
+        if not verify_password(credentials.password, user.hashed_password):
+            raise HTTPException(status_code=401, detail="Invalid credentials")
+
+        # Return user data
+        return {
+            "id": user.id,
+            "email": user.email,
+            "name": user.name
+        }
+    except Exception as e:
+        print("Login error:", str(e))
+        raise HTTPException(status_code=500, detail="Internal server error")
+
 @app.post("/signup")
-async def signup(user_data: UserSignUp):
-    # Add actual database check here
-    if user_data.email == "existing@example.com":
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    # Return mock response - replace with DB insertion
-    return {
-        "id": 2,
-        "email": user_data.email,
-        "name": user_data.name
-    }
+async def signup(user_data: UserSignUp, db: Session = Depends(get_db)):
+    """
+    Signup endpoint with proper database integration
+    """
+    try:
+        # Check if user already exists
+        existing_user = db.query(User).filter(User.email == user_data.email).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Email already registered")
+
+        # Hash password
+        hashed_password = get_password_hash(user_data.password)
+
+        # Create new user
+        new_user = User(
+            email=user_data.email,
+            hashed_password=hashed_password,
+            name=user_data.name
+        )
+
+        # Save user to database
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+
+        # Return user data
+        return {
+            "id": new_user.id,
+            "email": new_user.email,
+            "name": new_user.name
+        }
+    except Exception as e:
+        # Rollback in case of error
+        db.rollback()
+        print("Signup error:", str(e))
+        raise HTTPException(status_code=500, detail="Internal server error")
