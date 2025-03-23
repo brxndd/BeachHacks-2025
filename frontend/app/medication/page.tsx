@@ -1,5 +1,6 @@
 "use client";
-
+import { useEffect } from "react";
+import { useSession } from "next-auth/react"
 import { useState } from "react";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -13,6 +14,31 @@ interface CalendarEvent {
 }
 
 export default function CalendarPage() {
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status !== "authenticated" || !session?.user?.id) return;
+  
+    const fetchReminders = async () => {
+      try {
+        const res = await fetch(`http://localhost:8000/notifications/${session.user.id}`);
+        const data = await res.json();
+  
+        const formattedEvents = data.map((item: any) => ({
+          id: item.id,
+          title: item.med_string,
+          time: item.time_to_take.slice(0, 5),
+          date: item.date,
+        }));
+  
+        setEvents(formattedEvents);
+      } catch (err) {
+        console.error("Failed to load events:", err);
+      }
+    };
+  
+    fetchReminders();
+  }, [session, status]);
 
   // STATE
   const [events, setEvents] = useState<CalendarEvent[]>([]);
@@ -115,7 +141,7 @@ export default function CalendarPage() {
             med_string: newEventTitle.trim(),
             time_to_take: newEventTime + ":00",
             date: selectedDate,
-            users_id: 1
+            users_id: session?.user?.id
           })
         })
       } catch (err) {

@@ -143,3 +143,7 @@ async def create_notification(notif: NotificationBase, db: Session = Depends(get
     db.commit()
     db.refresh(new_notif)
     return new_notif
+
+@app.get("/notifications/{user_id}")
+def get_notifications(user_id: int, db: Session = Depends(get_db)):
+    return db.query(Notification).filter(Notification.users_id == user_id).all()
