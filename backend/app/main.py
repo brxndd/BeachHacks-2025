@@ -3,8 +3,9 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import get_db
-from app.models import User
+from app.models import User, Notification
 from typing import List
+from datetime import time
 from app.utils import get_password_hash, verify_password
 from app.routers import home, chatbot, medicine, todo  # importing all routers
 
@@ -51,6 +52,11 @@ class UserSignUp(BaseModel):
     email: str
     password: str
     name: str
+
+class NotificationBase(BaseModel):
+    med_string: str
+    time_to_take: time
+    users_id: int
 
 # Original endpoints
 @app.get("/")
@@ -125,3 +131,15 @@ async def signup(user_data: UserSignUp, db: Session = Depends(get_db)):
         db.rollback()
         print("Signup error:", str(e))
         raise HTTPException(status_code=500, detail="Internal server error")
+
+@app.post("/notifications")
+async def create_notification(notif: NotificationBase, db: Session = Depends(get_db)):
+    new_notif = Notification(
+        med_string = notif.med_string,
+        time_to_take = notif.time_to_take,
+        users_id = notif.users_id
+    )
+    db.add(new_notif)
+    db.commit()
+    db.refresh(new_notif)
+    return new_notif
