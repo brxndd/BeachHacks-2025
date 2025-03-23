@@ -17,6 +17,12 @@ export default function CalendarPage() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    const stored = localStorage.getItem("med_events");
+    if (stored) {
+      setEvents(JSON.parse(stored));
+      return;
+    }
+    
     if (status !== "authenticated" || !session?.user?.id) return;
   
     const fetchReminders = async () => {
@@ -114,7 +120,16 @@ export default function CalendarPage() {
   }
 
   function handleDeleteEvent(eventId: number) {
-    setEvents((prev) => prev.filter((e) => e.id !== eventId));
+    const updatedEvents = events.filter((e) => e.id !== eventId);
+    setEvents(updatedEvents);
+    localStorage.setItem("med_events", JSON.stringify(updatedEvents));
+  
+    // Also delete from backend
+    fetch(`http://localhost:8000/notifications/${eventId}`, {
+      method: "DELETE"
+    }).catch((err) => {
+      console.error("Failed to delete from backend:", err);
+    });
   }
 
   function handleSaveEvent() {
@@ -131,6 +146,7 @@ export default function CalendarPage() {
         date: selectedDate,
       };
       setEvents((prev) => [...prev, newEvent]);
+      localStorage.setItem("med_events", JSON.stringify([...events, newEvent]))
 
     async function postToBackend() {
       try {

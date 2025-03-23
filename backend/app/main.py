@@ -147,3 +147,12 @@ async def create_notification(notif: NotificationBase, db: Session = Depends(get
 @app.get("/notifications/{user_id}")
 def get_notifications(user_id: int, db: Session = Depends(get_db)):
     return db.query(Notification).filter(Notification.users_id == user_id).all()
+
+@app.delete("/notifications/{notif_id}")
+def delete_notification(notif_id: int, db : Session = Depends(get_db)):
+    notif = db.query(Notification).filter(Notification.id == notif_id).first()
+    if not notif:
+        raise HTTPException(status_code=404, detail="Notification not found")
+    db.delete(notif)
+    db.commit()
+    return {"message": "Notification deleted"}
