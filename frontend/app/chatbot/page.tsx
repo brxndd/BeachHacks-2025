@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState, useRef, KeyboardEvent } from 'react';
+import NavBar from '@/components/NavBar'; 
 
 interface Message {
   text: string;
@@ -23,6 +24,14 @@ export default function ChatbotPage() {
       isBot: true
     }]);
   }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -63,6 +72,7 @@ export default function ChatbotPage() {
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
+        <NavBar />
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map((msg, index) => (
                     <div key={index} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
