@@ -66,14 +66,6 @@ export default function NavBar() {
             // Show sign in/sign up when not authenticated
             <>
               <Link
-                href="/signin"
-                className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
-                         hover:text-[#ff0000] transition-colors duration-200 shadow-sm
-                         hover:shadow-md"
-              >
-                Sign In
-              </Link>
-              <Link
                 href="/signup"
                 className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
                          hover:text-[#ff0000] transition-colors duration-200 shadow-sm
@@ -81,7 +73,16 @@ export default function NavBar() {
               >
                 Sign Up
               </Link>
-            </>
+
+              <Link
+                href="/signin"
+                className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
+                         hover:text-[#ff0000] transition-colors duration-200 shadow-sm
+                         hover:shadow-md"
+              >
+                Sign In
+              </Link>
+           </>
           )}
         </div>
       </div>
