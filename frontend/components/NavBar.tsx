@@ -43,7 +43,7 @@ export default function NavBar() {
             Medication
           </Link>
           <Link 
-            href="/todo" 
+            href="/recommend" 
             className={`text-lg ${pathname === '/todo' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             To-Do List

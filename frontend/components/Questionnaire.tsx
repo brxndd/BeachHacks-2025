@@ -1,23 +1,24 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Questionnaire() {
+  const router = useRouter();
+
   // State to store form input values
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [selectedConditions, setSelectedConditions] = useState([]);
-  const [race, setRace] = useState(''); // State for race
-  const [sex, setSex] = useState(''); // State for sex
+  const [race, setRace] = useState('');
+  const [sex, setSex] = useState('');
+  const [error, setError] = useState('');
 
   // State to store the response from the backend
   const [response, setResponse] = useState(null);
-
-  // State to handle errors
-  const [error, setError] = useState('');
+  const [tasks, setTasks] = useState([]); // State to store the tasks
 
   // Preset conditions for the checklist
   const conditions = [
-    'None',
     'High Blood Pressure',
     'Diabetes',
     'Depression',
@@ -62,18 +63,26 @@ export default function Questionnaire() {
         return;
       }
 
+      // Create the form data object
+      const formData = {
+        name: name,
+        age: ageInt,
+        conditions: selectedConditions,
+        race: race,
+        sex: sex,
+      };
+
       // Send a POST request to the FastAPI backend
-      const res = await fetch('http://127.0.0.1:8000/form/', {
+      const res = await fetch('http://127.0.0.1:8000/generate-tasks/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: name,
-          age: ageInt,
-          conditions: selectedConditions,  
-          race: race, 
-          sex: sex,
+          age: formData.age,
+          sex: formData.sex,
+          race: formData.race,
+          conditions: formData.conditions,
         }),
       });
 
@@ -86,6 +95,9 @@ export default function Questionnaire() {
       const data = await res.json();
       setResponse(data); // Store the response in state
       setError(''); // Clear any previous errors
+
+      // Extract tasks from the response and update state
+      setTasks(data.tasks || []); // If no tasks, set an empty array
     } catch (error) {
       console.error('Error submitting form:', error);
       setError('An error occurred while submitting the form. Please try again.');
@@ -208,12 +220,22 @@ export default function Questionnaire() {
         </div>
       </form>
 
-      {/* Display Response */}
-      {response && (
-        <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
-          <h2 className="font-semibold">Response from Backend:</h2>
-          <pre>{JSON.stringify(response, null, 2)}</pre>
+
+      {/* Display Tasks */}
+      {tasks.length > 0 && (
+        <div>
+          <h2 className="font-semibold mt-6">Recommended Tasks:</h2>
+          {tasks.map((task, index) => (
+            <div key={index} className="p-4 mt-2 bg-gray-100 border rounded-lg">
+              {task}
+            </div>
+          ))}
         </div>
+      )}
+
+      {/* If no tasks are available */}
+      {tasks.length === 0 && !response && (
+        <div className="mt-6 text-gray-500">No tasks available yet.</div>
       )}
     </div>
   );
