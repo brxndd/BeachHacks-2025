@@ -31,7 +31,7 @@ export default function Home() {
               <p className="mt-2 text-gray-600">Track your health metrics with ease.</p>
             </div>
           </div>
-          <div className="text-center mt-8">
+          <div className="text-center mt-8 space-x-4">
             <button className="bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800">Sign Up</button>
             <button className="bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800">Sign In</button>
           </div>
