@@ -3,6 +3,7 @@ import os
 from typing import Dict, List, Optional, Tuple
 import uuid
 import logging
+import httpx
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class Recommender:
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), http_client=httpx.Client())
         self.sessions: Dict[str, List[Dict]] = {}
         self.system_context = [
             {
