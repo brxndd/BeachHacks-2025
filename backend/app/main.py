@@ -54,6 +54,7 @@ class UserSignUp(BaseModel):
 # Original endpoints
 @app.get("/")
 async def root():
+
     return {"message": "Root!"}
 
 @app.post("/form/")

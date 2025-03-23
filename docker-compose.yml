@@ -30,4 +30,3 @@ services:
     mem_reservation: 2g  # Soft memory limit (2 GB)
 
 
-
