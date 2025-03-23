@@ -5,4 +5,4 @@ router = APIRouter()
 
 @router.get("/medicine")
 async def home():
-        return {"message": "Welcome to the Medicine tab!"}
+    return {"message": "Welcome to the Medicine tab!"}
