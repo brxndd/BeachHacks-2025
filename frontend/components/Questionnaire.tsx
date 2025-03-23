@@ -16,6 +16,7 @@ export default function Questionnaire() {
   // State to store the response from the backend
   const [response, setResponse] = useState(null);
   const [tasks, setTasks] = useState([]); // State to store the tasks
+  const [isLoading, setIsLoading] = useState(false); // State to control loading state
 
   // Preset conditions for the checklist
   const conditions = [
@@ -63,6 +64,9 @@ export default function Questionnaire() {
         return;
       }
 
+      // Set loading state to true while submitting
+      setIsLoading(true);
+
       // Create the form data object
       const formData = {
         name: name,
@@ -98,9 +102,13 @@ export default function Questionnaire() {
 
       // Extract tasks from the response and update state
       setTasks(data.tasks || []); // If no tasks, set an empty array
+
+      // Set loading state to false after response is received
+      setIsLoading(false);
     } catch (error) {
       console.error('Error submitting form:', error);
       setError('An error occurred while submitting the form. Please try again.');
+      setIsLoading(false); // Set loading state to false on error
     }
   };
 
@@ -117,112 +125,123 @@ export default function Questionnaire() {
 
   return (
     <div className="mt-28 mb-32 p-6 max-w-7xl mx-auto">
-      <h1 className="text-[#CA0808] text-3xl font-bold mb-6">Let's get to know you better!</h1>
+      {/* Hide header and form while tasks are being displayed */}
+      {!isLoading && tasks.length === 0 && (
+        <h1 className="text-[#CA0808] text-3xl font-bold mb-6">Let's get to know you better!</h1>
+      )}
 
-      {/* Form for user input */}
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col space-y-6">
-          {/* Age Field */}
-          <div className="text-xl flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="age">
-              What's your age?
-            </label>
-            <input
-              type="number"
-              id="age"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              required
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
-              placeholder="Answer here"
-              min="18"
-              max="100"
-            />
-            <p className="text-sm text-gray-500 mt-1">Value can range from 18 to 100</p>
-          </div>
-
-          {/* Race Dropdown */}
-          <div className="text-xl flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="race">
-              Race
-            </label>
-            <select
-              id="race"
-              value={race}
-              onChange={(e) => setRace(e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
-              required
-            >
-              <option value="" disabled>Select your race</option>
-              {races.map((raceOption, index) => (
-                <option key={index} value={raceOption}>
-                  {raceOption}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Sex Dropdown */}
-          <div className="text-xl flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="sex">
-              Sex
-            </label>
-            <select
-              id="sex"
-              value={sex}
-              onChange={(e) => setSex(e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
-              required
-            >
-              <option value="" disabled>Select your sex</option>
-              {sexes.map((sexOption, index) => (
-                <option key={index} value={sexOption}>
-                  {sexOption}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Condition Checklist as Long Buttons */}
-          <div className="text-xl flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2">
-              Select your conditions:
-            </label>
-            {conditions.map((condition, index) => (
-              <button
-                key={index}
-                type="button" // Prevent form submission
-                onClick={() => handleConditionChange(condition)}
-                className={`flex items-center justify-between p-4 mb-2 rounded-lg text-left transition-colors duration-200 ${
-                  selectedConditions.includes(condition)
-                    ? 'bg-red-600 text-white' // Selected state
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200' // Default state
-                }`}
-              >
-                <span>{condition}</span>
-                {selectedConditions.includes(condition) && (
-                  <span className="ml-2">✓</span> // Checkmark for selected condition
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Error Message */}
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="text-xl bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300 w-full md:w-auto"
-          >
-            Submit
-          </button>
+      {/* Show loading spinner during form submission */}
+      {isLoading ? (
+        <div className="flex justify-center items-center mt-8">
+          <div className="w-24 h-24 border-8 border-t-8 border-[#CA0808] border-solid rounded-full animate-spin"></div>
         </div>
-      </form>
+      ) : (
+        // Form for user input (only visible if tasks are not yet loaded)
+        tasks.length === 0 && !isLoading && (
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col space-y-6">
+              {/* Age Field */}
+              <div className="text-xl flex flex-col">
+                <label className="text-[#CA0808] font-semibold mb-2" htmlFor="age">
+                  What's your age?
+                </label>
+                <input
+                  type="number"
+                  id="age"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  required
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
+                  placeholder="Answer here"
+                  min="18"
+                  max="100"
+                />
+                <p className="text-sm text-gray-500 mt-1">Value can range from 18 to 100</p>
+              </div>
 
+              {/* Race Dropdown */}
+              <div className="text-xl flex flex-col">
+                <label className="text-[#CA0808] font-semibold mb-2" htmlFor="race">
+                  Race
+                </label>
+                <select
+                  id="race"
+                  value={race}
+                  onChange={(e) => setRace(e.target.value)}
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
+                  required
+                >
+                  <option value="" disabled>Select your race</option>
+                  {races.map((raceOption, index) => (
+                    <option key={index} value={raceOption}>
+                      {raceOption}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-      {/* Display Tasks */}
-      {tasks.length > 0 && (
+              {/* Sex Dropdown */}
+              <div className="text-xl flex flex-col">
+                <label className="text-[#CA0808] font-semibold mb-2" htmlFor="sex">
+                  Sex
+                </label>
+                <select
+                  id="sex"
+                  value={sex}
+                  onChange={(e) => setSex(e.target.value)}
+                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
+                  required
+                >
+                  <option value="" disabled>Select your sex</option>
+                  {sexes.map((sexOption, index) => (
+                    <option key={index} value={sexOption}>
+                      {sexOption}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Condition Checklist as Long Buttons */}
+              <div className="text-xl flex flex-col">
+                <label className="text-[#CA0808] font-semibold mb-2">
+                  Select your conditions:
+                </label>
+                {conditions.map((condition, index) => (
+                  <button
+                    key={index}
+                    type="button" // Prevent form submission
+                    onClick={() => handleConditionChange(condition)}
+                    className={`flex items-center justify-between p-4 mb-2 rounded-lg text-left transition-colors duration-200 ${
+                      selectedConditions.includes(condition)
+                        ? 'bg-red-600 text-white' // Selected state
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200' // Default state
+                    }`}
+                  >
+                    <span>{condition}</span>
+                    {selectedConditions.includes(condition) && (
+                      <span className="ml-2">✓</span> // Checkmark for selected condition
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* Error Message */}
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="text-xl bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300 w-full md:w-auto"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        )
+      )}
+
+      {/* Display Tasks after loading */}
+      {tasks.length > 0 && !isLoading && (
         <div>
           <h2 className="font-semibold mt-6">Recommended Tasks:</h2>
           {tasks.map((task, index) => (
@@ -234,7 +253,7 @@ export default function Questionnaire() {
       )}
 
       {/* If no tasks are available */}
-      {tasks.length === 0 && !response && (
+      {tasks.length === 0 && !response && !isLoading && (
         <div className="mt-6 text-gray-500">No tasks available yet.</div>
       )}
     </div>
