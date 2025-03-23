@@ -26,5 +26,8 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+    mem_limit: 4g # increasing javascript memory limit cause it hates me 
+    mem_reservation: 2g  # Soft memory limit (2 GB)
+
 
 
