@@ -28,7 +28,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
 
-            <Link href="/todo">
+            <Link href="/recommend">
               <div className="bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
                 <h2 className="text-2xl font-semibold text-[#8a2929]">Daily Checklist</h2>
                 <p className="mt-2 text-gray-600">Tailored tasks to do everyday. </p>

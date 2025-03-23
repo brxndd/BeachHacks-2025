@@ -1,12 +1,12 @@
 'use client'
-import Questionnaire from "../../components/Questionnaire"
+import NoDBRecommend from "../../components/NoDBRecommend"
 import NavBar from "../../components/NavBar"
 
-export default function TodoList() {
+export default function TodoPage() {
   return (
     <div>
       <NavBar />
-      <Questionnaire />
+      <NoDBRecommend />
     </div>
   );
 }
