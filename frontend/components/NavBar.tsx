@@ -67,10 +67,6 @@ export default function NavBar() {
             <>
               <Link
                 href="/signup"
-                className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
-                         hover:text-[#ff0000] transition-colors duration-200 shadow-sm
-                         hover:shadow-md border-2 border-[#CA0808]"
-                href="/signin"
                 className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
                          hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md"
               >
@@ -79,10 +75,6 @@ export default function NavBar() {
 
               <Link
                 href="/signin"
-                className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
-                         hover:text-[#ff0000] transition-colors duration-200 shadow-sm
-                         hover:shadow-md"
-                href="/signup"
                 className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
                          hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md border-2 border-[#8a2929]"
               >
