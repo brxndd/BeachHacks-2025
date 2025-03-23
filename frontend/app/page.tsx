@@ -1,13 +1,15 @@
 import Image from "next/image";
 import Questionnaire from "../components/Questionnaire";
-import Test from "../components/Test";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 export default function Home() {
 
   return (
     <div>
-      <h1> hello world</h1>
-      <Test />
+      <NavBar />
+      <Questionnaire />
+      <Footer />
     </div>
   );
 }
