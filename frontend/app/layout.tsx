@@ -1,11 +1,12 @@
 import "./globals.css";
 import { League_Spartan } from 'next/font/google';
+import { Providers } from './providers'; // Import the Session Provider
 
 // Load the League Spartan font
 const leagueSpartan = League_Spartan({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'], // Specify the weights you need
-  variable: '--font-league-spartan', // Optional: Define a CSS variable
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-league-spartan',
 });
 
 export default function RootLayout({
@@ -15,7 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${leagueSpartan.variable}`}>
-      <body className={leagueSpartan.className}>{children}</body>
+      <body className={leagueSpartan.className}>
+        <Providers> {/* Wrap children with Session Provider */}
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
