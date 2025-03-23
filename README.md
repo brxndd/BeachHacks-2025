@@ -1,4 +1,4 @@
-# Heart2Heart 🌟
+# Heart2Heart ❤️
 
 **A Full-Stack Web Application for Heart Health Management**
 
@@ -26,8 +26,8 @@ Heart2Heart is a specialized platform designed to empower patients with heart di
 ## Tech Stack 🛠️
 
 **Frontend**
-- Next.js 14 (App Router)
-- Tailwind CSS + Shadcn/ui for styling
+- Next.js 15 (App Router)
+- Tailwind CSS for styling
 - NextAuth.js for session management
 
 **Backend**
@@ -37,15 +37,13 @@ Heart2Heart is a specialized platform designed to empower patients with heart di
 
 **Database**
 - PostgreSQL hosted on [Neon.tech](https://neon.tech)
-- Prisma ORM for schema management
 
 **AI Integration**
-- OpenAI GPT-3.5/4 API
+- OpenAI GPT-4o API
 - Custom prompt engineering for medical safety
 
 **Infrastructure**
 - Dockerized development/production environment
-- NGINX reverse proxy (production setup)
 
 ## Getting Started 🚀
 
