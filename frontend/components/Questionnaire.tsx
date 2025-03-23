@@ -251,11 +251,11 @@ export default function Questionnaire() {
         <div>
           {tasks.length > 0 ? (
             <>
-              <h2 className="font-semibold mt-6">Recommended Tasks:</h2>
+              <h2 className="font-semibold mt-6 text-4xl flex justify-center items-center">Recommended Tasks:</h2>
               {tasks.map((task, index) => (
                 <div
                   key={index}
-                  className="p-4 mt-2 bg-gray-100 border rounded-lg cursor-pointer"
+                  className="text-center p-10 text-xl mt-10 bg-gray-100 rounded-lg shadow-lg cursor-pointer"
                   onClick={() => handleRemoveTask(task)}
                 >
                   {task}
@@ -263,13 +263,13 @@ export default function Questionnaire() {
               ))}
             </>
           ) : (
-            <div className="mt-6 text-gray-500">No tasks available yet.</div>
+            <div className="text-4xl flex justify-center items-center mt-6 text-gray-500">No tasks available yet.</div>
           )}
 
           {/* Redo Questionnaire Button always visible after response */}
           <button
             onClick={handleRedoQuestionnaire}
-            className="mt-6 text-white bg-[#CA0808] px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300"
+            className="text-2xl flex justify-center items-center mt-6 text-white bg-[#CA0808] px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300"
           >
             Redo Questionnaire
           </button>
