@@ -23,22 +23,22 @@ app.include_router(medicine.router)
 app.include_router(todo.router)
 
 
-# pydantic model
-"""
-    FORM will track:
-    - Name 
-    - Age
-    - Biological Sex 
-    - Race 
-    - Conditions 
-"""
-
+#input for questionnaire
 class UserInput(BaseModel):
+    
+    """
+        FORM will track:
+        - Name 
+        - Age
+        - Biological Sex 
+        - Race 
+        - Conditions 
+    """
     name: str 
     age: int
     sex: str 
     race: str     
-    condition: str 
+    conditions: List[str]
 
 # New authentication models
 class UserLogin(BaseModel):

@@ -104,7 +104,7 @@ export default function Questionnaire() {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto border">
+    <div className="mt-32 mb-32 p-6 max-w-7xl mx-auto">
       <h1 className="text-[#CA0808] text-3xl font-bold mb-6">Let's get to know you better!</h1>
 
       {/* Form for user input */}
