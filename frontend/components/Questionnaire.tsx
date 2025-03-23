@@ -121,7 +121,7 @@ export default function Questionnaire() {
               value={age}
               onChange={(e) => setAge(e.target.value)}
               required
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CA0808]"
+              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
               placeholder="Answer here"
               min="18"
               max="100"
@@ -138,7 +138,7 @@ export default function Questionnaire() {
               id="race"
               value={race}
               onChange={(e) => setRace(e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CA0808]"
+              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
               required
             >
               <option value="" disabled>Select your race</option>
@@ -159,7 +159,7 @@ export default function Questionnaire() {
               id="sex"
               value={sex}
               onChange={(e) => setSex(e.target.value)}
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CA0808]"
+              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
               required
             >
               <option value="" disabled>Select your sex</option>

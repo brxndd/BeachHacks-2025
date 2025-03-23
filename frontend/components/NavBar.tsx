@@ -8,7 +8,7 @@ export default function NavBar() {
   const { data: session } = useSession();
 
   return (
-    <nav className="bg-[#CA0808] border-gray-200 h-16">
+    <nav className="bg-[#8a2929] border-gray-200 h-16">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative h-full">
         {/* Logo on left - Unchanged */}
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse z-10">
@@ -26,25 +26,25 @@ export default function NavBar() {
         <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 h-full items-center space-x-8">
           <Link 
             href="/" 
-            className={`text-lg ${pathname === '/' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+            className={`text-lg ${pathname === '/' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             Home
           </Link>
           <Link 
             href="/chatbot" 
-            className={`text-lg ${pathname === '/chatbot' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+            className={`text-lg ${pathname === '/chatbot' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             Chatbot
           </Link>
           <Link 
             href="/medication" 
-            className={`text-lg ${pathname === '/medication' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+            className={`text-lg ${pathname === '/medication' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             Medication
           </Link>
           <Link 
             href="/todo" 
-            className={`text-lg ${pathname === '/todo' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+            className={`text-lg ${pathname === '/todo' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             To-Do List
           </Link>
@@ -56,7 +56,7 @@ export default function NavBar() {
             // Show sign out button when authenticated
             <button
               onClick={() => signOut()}
-              className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
+              className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
                        hover:text-[#ff0000] transition-colors duration-200 shadow-sm
                        hover:shadow-md"
             >
@@ -70,6 +70,9 @@ export default function NavBar() {
                 className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
                          hover:text-[#ff0000] transition-colors duration-200 shadow-sm
                          hover:shadow-md border-2 border-[#CA0808]"
+                href="/signin"
+                className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
+                         hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md"
               >
                 Sign Up
               </Link>
@@ -79,6 +82,9 @@ export default function NavBar() {
                 className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
                          hover:text-[#ff0000] transition-colors duration-200 shadow-sm
                          hover:shadow-md"
+                href="/signup"
+                className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
+                         hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md border-2 border-[#8a2929]"
               >
                 Sign In
               </Link>

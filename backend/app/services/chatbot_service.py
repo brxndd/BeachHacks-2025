@@ -4,6 +4,7 @@ from typing import Dict, List, Optional, Tuple
 import uuid
 import logging
 from openai import OpenAI
+import httpx
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class ChatbotService:
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), http_client=httpx.Client())
         self.sessions: Dict[str, List[Dict]] = {}
         self.system_context = [
             {
