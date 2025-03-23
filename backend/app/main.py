@@ -1,9 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.routers import home, chatbot, medicine, todo  # importing all routers
-from fastapi.middleware.cors import CORSMiddleware  # import middleware
+from app.routers import home, chatbot, medicine, todo # importing all routers
+from fastapi.middleware.cors import CORSMiddleware # import middleware
+from typing import List 
 
-# Create app instance 
+# creating app instance 
 app = FastAPI()
 
 # Consolidated CORS middleware configuration
@@ -34,16 +35,16 @@ app.include_router(todo.router)
 
 class UserInput(BaseModel):
     name: str 
-    age: int 
+    age: int
     sex: str 
     race: str     
     condition: str 
-
 
 # New authentication models
 class UserLogin(BaseModel):
     email: str
     password: str
+    conditions: List[str]
 
 class UserSignUp(BaseModel):
     email: str

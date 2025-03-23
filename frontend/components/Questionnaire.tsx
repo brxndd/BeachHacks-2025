@@ -56,7 +56,8 @@ export default function Questionnaire() {
 
     try {
       // Validate age input
-      if (age < 18 || age > 100) {
+      const ageInt = parseInt(age, 10);
+      if (ageInt < 18 || ageInt > 100) {
         setError('Age must be between 18 and 100.');
         return;
       }
@@ -69,10 +70,10 @@ export default function Questionnaire() {
         },
         body: JSON.stringify({
           name: name,
-          age: parseInt(age), // Convert to integer
-          conditions: selectedConditions, // Send selected conditions
-          race: race, // Send selected race
-          sex: sex, // Send selected sex
+          age: ageInt,
+          conditions: selectedConditions,  
+          race: race, 
+          sex: sex,
         }),
       });
 
@@ -103,7 +104,7 @@ export default function Questionnaire() {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto">
+    <div className="p-6 max-w-7xl mx-auto border">
       <h1 className="text-[#CA0808] text-3xl font-bold mb-6">Let's get to know you better!</h1>
 
       {/* Form for user input */}
@@ -215,7 +216,7 @@ export default function Questionnaire() {
             type="submit"
             className="bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300 w-full md:w-auto"
           >
-            Continue
+            Submit
           </button>
         </div>
       </form>
