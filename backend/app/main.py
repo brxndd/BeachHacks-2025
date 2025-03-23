@@ -28,13 +28,11 @@ class UserInput(BaseModel):
     
     """
         FORM will track:
-        - Name 
         - Age
         - Biological Sex 
         - Race 
         - Conditions 
     """
-    name: str 
     age: int
     sex: str 
     race: str     
@@ -89,3 +87,4 @@ async def signup(user_data: UserSignUp):
         "email": user_data.email,
         "name": user_data.name
     }
+

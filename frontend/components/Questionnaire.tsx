@@ -110,22 +110,6 @@ export default function Questionnaire() {
       {/* Form for user input */}
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-6">
-          {/* Name Field */}
-          <div className="text-xl flex flex-col">
-            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="name">
-              What's your name?
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#CA0808]"
-              placeholder="Answer here"
-            />
-          </div>
-
           {/* Age Field */}
           <div className="text-xl flex flex-col">
             <label className="text-[#CA0808] font-semibold mb-2" htmlFor="age">
