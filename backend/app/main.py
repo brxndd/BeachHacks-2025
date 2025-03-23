@@ -22,10 +22,21 @@ app.include_router(medicine.router)
 app.include_router(todo.router)
 
 # pydantic model
+"""
+    FORM will track:
+    - Name 
+    - Age
+    - Biological Sex 
+    - Race 
+    - Conditions 
+"""
 class UserInput(BaseModel):
     name: str 
     age: int 
-    prev_condition: bool
+    sex: str 
+    race: str     
+    condition: str 
+
 
 # add CORS middleware for front and backend commmunication
 app.add_middleware(

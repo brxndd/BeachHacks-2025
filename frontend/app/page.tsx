@@ -19,17 +19,15 @@ export default function Home() {
             />
           </div>
 
-
           <div className="text-[#CA0808] flex justify-center items-center flex-col">
             <h1 className="text-5xl font-bold mt-8 md:text-6xl lg:text-7xl">HEART2HEART </h1>
             <p className="text-xl mb-32 italic">Small Steps, Big Impact</p>
           </div>
 
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <h2 className="text-2xl font-semibold text-[#CA0808]">Daily Checklist</h2>
-              <p className="mt-2 text-gray-600">Explore our services and re</p>
+              <p className="mt-2 text-gray-600">Recommended daily tasks improve your health</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <h2 className="text-2xl font-semibold text-[#CA0808]">Chatbot</h2>
@@ -42,6 +40,10 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {/* testing */}
+      <Questionnaire />
+
       <Footer />
     </div>
   );
