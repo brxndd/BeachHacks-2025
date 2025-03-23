@@ -202,22 +202,22 @@ export default function CalendarPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <NavBar />
 
-      <main className="flex-grow container mx-auto px-4 py-8 text-[#CA0808] flex flex-col">
+      <main className="flex-grow container mx-auto px-4 py-8 text-[#8a2929] flex flex-col">
         {/* MONTH/YEAR NAV */}
         <div className="flex items-center justify-center space-x-4 mb-6">
-          <button className="px-2 py-1 border rounded" onClick={handlePrevYear}>
+          <button className="hover:scale-105 px-2 py-1 border rounded cursor-pointer" onClick={handlePrevYear}>
             « Year
           </button>
-          <button className="px-2 py-1 border rounded" onClick={handlePrevMonth}>
+          <button className="hover:scale-105 px-2 py-1 border rounded cursor-pointer" onClick={handlePrevMonth}>
             ‹ Month
           </button>
           <div className="text-xl font-bold">
             {displayMonthName} {currentYear}
           </div>
-          <button className="px-2 py-1 border rounded" onClick={handleNextMonth}>
+          <button className="hover:scale-105 px-2 py-1 border rounded cursor-pointer" onClick={handleNextMonth}>
             Month ›
           </button>
-          <button className="px-2 py-1 border rounded" onClick={handleNextYear}>
+          <button className="hover:scale-105 px-2 py-1 border rounded cursor-pointer" onClick={handleNextYear}>
             Year »
           </button>
         </div>
@@ -254,7 +254,7 @@ export default function CalendarPage() {
                 {dayEvents.map((ev) => (
                   <div
                     key={ev.id}
-                    className="flex flex-col text-sm mt-1 bg-[#CA0808] text-white rounded px-1"
+                    className="flex flex-col text-sm mt-1 bg-[#8a2929] text-white rounded px-1"
                   >
                     <span>{ev.title}</span>
                     {ev.time && <span className="text-xs">{ev.time}</span>}
@@ -294,9 +294,9 @@ export default function CalendarPage() {
 
       {/* POPUP: ADD/EDIT */}
       {isPopupOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-60">
           <div className="bg-white p-6 rounded shadow-lg max-w-sm w-full">
-            <h2 className="text-xl font-semibold mb-2 text-[#CA0808]">
+            <h2 className="text-xl font-semibold mb-2 text-[#8a2929]">
               {popupMode === "add" ? "Add Medicine Time" : "Edit Medicine"}
             </h2>
             <p className="text-gray-700 mb-4">Date: {selectedDate}</p>
@@ -322,7 +322,7 @@ export default function CalendarPage() {
                 Cancel
               </button>
               <button
-                className="px-4 py-2 bg-[#CA0808] text-white rounded"
+                className="px-4 py-2 bg-[#8a2929] text-white rounded"
                 onClick={handleSaveEvent}
               >
                 {popupMode === "add" ? "Save" : "Update"}

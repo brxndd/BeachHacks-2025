@@ -32,13 +32,11 @@ class UserInput(BaseModel):
     
     """
         FORM will track:
-        - Name 
         - Age
         - Biological Sex 
         - Race 
         - Conditions 
     """
-    name: str 
     age: int
     sex: str 
     race: str     

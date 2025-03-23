@@ -66,20 +66,21 @@ export default function NavBar() {
             // Show sign in/sign up when not authenticated
             <>
               <Link
-                href="/signin"
+                href="/signup"
                 className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
                          hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md"
               >
-                Sign In
+                Sign Up
               </Link>
+
               <Link
-                href="/signup"
+                href="/signin"
                 className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
                          hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md border-2 border-[#8a2929]"
               >
-                Sign Up
+                Sign In
               </Link>
-            </>
+           </>
           )}
         </div>
       </div>
