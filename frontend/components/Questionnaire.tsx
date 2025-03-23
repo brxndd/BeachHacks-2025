@@ -123,12 +123,29 @@ export default function Questionnaire() {
     }
   };
 
+  // Function to remove a task from the list
+  const handleRemoveTask = (task) => {
+    setTasks(tasks.filter((t) => t !== task));
+  };
+
+  // Function to reset the questionnaire
+  const handleRedoQuestionnaire = () => {
+    setName('');
+    setAge('');
+    setSelectedConditions([]);
+    setRace('');
+    setSex('');
+    setError('');
+    setResponse(null);
+    setTasks([]);
+    setIsLoading(false);
+  };
+
   return (
     <div className="mt-28 mb-32 p-6 max-w-7xl mx-auto">
-      {/* Hide header and form while tasks are being displayed */}
-      {!isLoading && tasks.length === 0 && (
-        <h1 className="text-[#CA0808] text-3xl font-bold mb-6">Let's get to know you better!</h1>
-      )}
+      <h1 className="text-[#CA0808] text-3xl font-bold mb-6">
+        Let's get to know you better!
+      </h1>
 
       {/* Show loading spinner during form submission */}
       {isLoading ? (
@@ -136,8 +153,8 @@ export default function Questionnaire() {
           <div className="w-24 h-24 border-8 border-t-8 border-[#CA0808] border-solid rounded-full animate-spin"></div>
         </div>
       ) : (
-        // Form for user input (only visible if tasks are not yet loaded)
-        tasks.length === 0 && !isLoading && (
+        // Form for user input
+        !tasks.length && !response && (
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-6">
               {/* Age Field */}
@@ -245,10 +262,20 @@ export default function Questionnaire() {
         <div>
           <h2 className="font-semibold mt-6">Recommended Tasks:</h2>
           {tasks.map((task, index) => (
-            <div key={index} className="p-4 mt-2 bg-gray-100 border rounded-lg">
+            <div
+              key={index}
+              className="p-4 mt-2 bg-gray-100 border rounded-lg cursor-pointer"
+              onClick={() => handleRemoveTask(task)}
+            >
               {task}
             </div>
           ))}
+          <button
+            onClick={handleRedoQuestionnaire}
+            className="mt-6 text-white bg-[#CA0808] px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300"
+          >
+            Redo Questionnaire
+          </button>
         </div>
       )}
 
