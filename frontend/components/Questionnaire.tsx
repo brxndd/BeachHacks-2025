@@ -54,20 +54,17 @@ export default function Questionnaire() {
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
 
     try {
-      // Validate age input
       const ageInt = parseInt(age, 10);
       if (ageInt < 18 || ageInt > 100) {
         setError('Age must be between 18 and 100.');
         return;
       }
 
-      // Set loading state to true while submitting
       setIsLoading(true);
 
-      // Create the form data object
       const formData = {
         name: name,
         age: ageInt,
@@ -76,12 +73,9 @@ export default function Questionnaire() {
         sex: sex,
       };
 
-      // Send a POST request to the FastAPI backend
       const res = await fetch('http://127.0.0.1:8000/generate-tasks/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           age: formData.age,
           sex: formData.sex,
@@ -90,35 +84,27 @@ export default function Questionnaire() {
         }),
       });
 
-      // Check if the request was successful
       if (!res.ok) {
         throw new Error('Network response was not ok');
       }
 
-      // Parse the JSON response
       const data = await res.json();
-      setResponse(data); // Store the response in state
-      setError(''); // Clear any previous errors
-
-      // Extract tasks from the response and update state
-      setTasks(data.tasks || []); // If no tasks, set an empty array
-
-      // Set loading state to false after response is received
+      setResponse(data); 
+      setError('');
+      setTasks(data.tasks || []);
       setIsLoading(false);
     } catch (error) {
       console.error('Error submitting form:', error);
       setError('An error occurred while submitting the form. Please try again.');
-      setIsLoading(false); // Set loading state to false on error
+      setIsLoading(false);
     }
   };
 
   // Function to handle checkbox changes
   const handleConditionChange = (condition) => {
     if (selectedConditions.includes(condition)) {
-      // If the condition is already selected, remove it
       setSelectedConditions(selectedConditions.filter((c) => c !== condition));
     } else {
-      // If the condition is not selected, add it
       setSelectedConditions([...selectedConditions, condition]);
     }
   };
@@ -143,9 +129,12 @@ export default function Questionnaire() {
 
   return (
     <div className="mt-28 mb-32 p-6 max-w-7xl mx-auto">
-      <h1 className="text-[#CA0808] text-3xl font-bold mb-6">
-        Let's get to know you better!
-      </h1>
+      {/* Show header only when the form is visible (i.e. before submission) */}
+      {!isLoading && !response && (
+        <h1 className="text-[#CA0808] text-3xl font-bold mb-6">
+          Let's get to know you better!
+        </h1>
+      )}
 
       {/* Show loading spinner during form submission */}
       {isLoading ? (
@@ -153,8 +142,8 @@ export default function Questionnaire() {
           <div className="w-24 h-24 border-8 border-t-8 border-[#CA0808] border-solid rounded-full animate-spin"></div>
         </div>
       ) : (
-        // Form for user input
-        !tasks.length && !response && (
+        // Display the form if no response has been received yet
+        !response && (
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-6">
               {/* Age Field */}
@@ -226,17 +215,17 @@ export default function Questionnaire() {
                 {conditions.map((condition, index) => (
                   <button
                     key={index}
-                    type="button" // Prevent form submission
+                    type="button"
                     onClick={() => handleConditionChange(condition)}
                     className={`flex items-center justify-between p-4 mb-2 rounded-lg text-left transition-colors duration-200 ${
                       selectedConditions.includes(condition)
-                        ? 'bg-red-600 text-white' // Selected state
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200' // Default state
+                        ? 'bg-red-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     <span>{condition}</span>
                     {selectedConditions.includes(condition) && (
-                      <span className="ml-2">✓</span> // Checkmark for selected condition
+                      <span className="ml-2">✓</span>
                     )}
                   </button>
                 ))}
@@ -257,19 +246,27 @@ export default function Questionnaire() {
         )
       )}
 
-      {/* Display Tasks after loading */}
-      {tasks.length > 0 && !isLoading && (
+      {/* After receiving a response, display tasks or a "No tasks available" message */}
+      {!isLoading && response && (
         <div>
-          <h2 className="font-semibold mt-6">Recommended Tasks:</h2>
-          {tasks.map((task, index) => (
-            <div
-              key={index}
-              className="p-4 mt-2 bg-gray-100 border rounded-lg cursor-pointer"
-              onClick={() => handleRemoveTask(task)}
-            >
-              {task}
-            </div>
-          ))}
+          {tasks.length > 0 ? (
+            <>
+              <h2 className="font-semibold mt-6">Recommended Tasks:</h2>
+              {tasks.map((task, index) => (
+                <div
+                  key={index}
+                  className="p-4 mt-2 bg-gray-100 border rounded-lg cursor-pointer"
+                  onClick={() => handleRemoveTask(task)}
+                >
+                  {task}
+                </div>
+              ))}
+            </>
+          ) : (
+            <div className="mt-6 text-gray-500">No tasks available yet.</div>
+          )}
+
+          {/* Redo Questionnaire Button always visible after response */}
           <button
             onClick={handleRedoQuestionnaire}
             className="mt-6 text-white bg-[#CA0808] px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300"
@@ -277,11 +274,6 @@ export default function Questionnaire() {
             Redo Questionnaire
           </button>
         </div>
-      )}
-
-      {/* If no tasks are available */}
-      {tasks.length === 0 && !response && !isLoading && (
-        <div className="mt-6 text-gray-500">No tasks available yet.</div>
       )}
     </div>
   );
