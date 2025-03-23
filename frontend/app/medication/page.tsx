@@ -105,6 +105,27 @@ export default function CalendarPage() {
         date: selectedDate,
       };
       setEvents((prev) => [...prev, newEvent]);
+
+    async function postToBackend() {
+      try {
+        await fetch("http://localhost:8000/notifications" ,{
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            med_string: newEventTitle.trim(),
+            time_to_take: newEventTime + ":00",
+            date: selectedDate,
+            users_id: 1
+          })
+        })
+      } catch (err) {
+        console.error("Failed to save to backend:", err);
+        alert("Failed to sync with database.")
+      }
+    }
+
+    postToBackend();
+
     } else if (popupMode === "edit" && eventIdBeingEdited) {
       setEvents((prev) =>
         prev.map((ev) =>
