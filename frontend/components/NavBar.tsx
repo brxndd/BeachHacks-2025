@@ -8,7 +8,7 @@ export default function NavBar() {
   const { data: session } = useSession();
 
   return (
-    <nav className="bg-[#CA0808] border-gray-200 h-16">
+    <nav className="bg-[#8a2929] border-gray-200 h-16">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative h-full">
         {/* Logo on left - Unchanged */}
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse z-10">
@@ -56,7 +56,7 @@ export default function NavBar() {
             // Show sign out button when authenticated
             <button
               onClick={() => signOut()}
-              className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
+              className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
                        hover:text-[#ff0000] transition-colors duration-200 shadow-sm
                        hover:shadow-md"
             >
@@ -67,15 +67,15 @@ export default function NavBar() {
             <>
               <Link
                 href="/signin"
-                className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
+                className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
                          hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md"
               >
                 Sign In
               </Link>
               <Link
                 href="/signup"
-                className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
-                         hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md border-2 border-[#CA0808]"
+                className="bg-white text-[#8a2929] px-6 py-2 rounded-full text-lg font-semibold 
+                         hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md border-2 border-[#8a2929]"
               >
                 Sign Up
               </Link>

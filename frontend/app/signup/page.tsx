@@ -42,7 +42,7 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-3xl font-bold text-center text-[#CA0808]">Create Account</h2>
+        <h2 className="text-3xl font-bold text-center text-[#8a2929]">Create Account</h2>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -51,7 +51,7 @@ export default function SignUpPage() {
             <input
               {...register('name', { required: 'Name is required' })}
               type="text"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#CA0808] focus:ring-[#CA0808]"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8a2929] focus:ring-[#8a2929]"
             />
             {errors.name && (
               <p className="text-red-600 text-sm mt-1">{errors.name.message?.toString()}</p>
@@ -71,7 +71,7 @@ export default function SignUpPage() {
                 }
               })}
               type="email"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#CA0808] focus:ring-[#CA0808]"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8a2929] focus:ring-[#8a2929]"
             />
             {errors.email && (
               <p className="text-red-600 text-sm mt-1">{errors.email.message?.toString()}</p>
@@ -91,7 +91,7 @@ export default function SignUpPage() {
                 }
               })}
               type="password"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#CA0808] focus:ring-[#CA0808]"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#8a2929] focus:ring-[#8a2929]"
             />
             {errors.password && (
               <p className="text-red-600 text-sm mt-1">{errors.password.message?.toString()}</p>
@@ -100,7 +100,7 @@ export default function SignUpPage() {
 
           <button
             type="submit"
-            className="w-full bg-[#CA0808] text-white py-2 px-4 rounded-md hover:bg-[#B30707] transition-colors"
+            className="w-full bg-[#8a2929] text-white py-2 px-4 rounded-md hover:bg-[#B30707] transition-colors"
           >
             Sign Up
           </button>
@@ -110,7 +110,7 @@ export default function SignUpPage() {
           <span className="text-gray-600">Already have an account? </span>
           <Link 
             href="/signin" 
-            className="text-[#CA0808] hover:text-[#B30707] font-semibold"
+            className="text-[#8a2929] hover:text-[#B30707] font-semibold"
           >
             Sign In
           </Link>
