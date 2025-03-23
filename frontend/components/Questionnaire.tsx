@@ -104,31 +104,15 @@ export default function Questionnaire() {
   };
 
   return (
-    <div className="mt-6 p-6 max-w-7xl mx-auto">
-      <h1 className="text-[#8a2929] text-3xl font-bold mb-6">Let's get to know you better!</h1>
+    <div className="mt-28 mb-32 p-6 max-w-7xl mx-auto">
+      <h1 className="text-[#CA0808] text-3xl font-bold mb-6">Let's get to know you better!</h1>
 
       {/* Form for user input */}
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-6">
-          {/* Name Field */}
-          <div className="flex flex-col">
-            <label className="text-[#8a2929] font-semibold mb-2" htmlFor="name">
-              What's your name?
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8a2929]"
-              placeholder="Answer here"
-            />
-          </div>
-
           {/* Age Field */}
-          <div className="flex flex-col">
-            <label className="text-[#8a2929] font-semibold mb-2" htmlFor="age">
+          <div className="text-xl flex flex-col">
+            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="age">
               What's your age?
             </label>
             <input
@@ -146,8 +130,8 @@ export default function Questionnaire() {
           </div>
 
           {/* Race Dropdown */}
-          <div className="flex flex-col">
-            <label className="text-[#8a2929] font-semibold mb-2" htmlFor="race">
+          <div className="text-xl flex flex-col">
+            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="race">
               Race
             </label>
             <select
@@ -167,8 +151,8 @@ export default function Questionnaire() {
           </div>
 
           {/* Sex Dropdown */}
-          <div className="flex flex-col">
-            <label className="text-[#8a2929] font-semibold mb-2" htmlFor="sex">
+          <div className="text-xl flex flex-col">
+            <label className="text-[#CA0808] font-semibold mb-2" htmlFor="sex">
               Sex
             </label>
             <select
@@ -187,24 +171,27 @@ export default function Questionnaire() {
             </select>
           </div>
 
-          {/* Condition Checklist */}
-          <div className="flex flex-col">
-            <label className="text-[#8a2929] font-semibold mb-2">
+          {/* Condition Checklist as Long Buttons */}
+          <div className="text-xl flex flex-col">
+            <label className="text-[#CA0808] font-semibold mb-2">
               Select your conditions:
             </label>
             {conditions.map((condition, index) => (
-              <div key={index} className="flex items-center">
-                <input
-                  type="checkbox"
-                  id={`condition-${index}`}
-                  checked={selectedConditions.includes(condition)}
-                  onChange={() => handleConditionChange(condition)}
-                  className="mr-2"
-                />
-                <label htmlFor={`condition-${index}`} className="text-gray-700">
-                  {condition}
-                </label>
-              </div>
+              <button
+                key={index}
+                type="button" // Prevent form submission
+                onClick={() => handleConditionChange(condition)}
+                className={`flex items-center justify-between p-4 mb-2 rounded-lg text-left transition-colors duration-200 ${
+                  selectedConditions.includes(condition)
+                    ? 'bg-red-600 text-white' // Selected state
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200' // Default state
+                }`}
+              >
+                <span>{condition}</span>
+                {selectedConditions.includes(condition) && (
+                  <span className="ml-2">✓</span> // Checkmark for selected condition
+                )}
+              </button>
             ))}
           </div>
 
@@ -214,7 +201,7 @@ export default function Questionnaire() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-[#8a2929] text-white px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300 w-full md:w-auto"
+            className="text-xl bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800 transition duration-300 w-full md:w-auto"
           >
             Submit
           </button>
