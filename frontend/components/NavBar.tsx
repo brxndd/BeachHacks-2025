@@ -26,25 +26,25 @@ export default function NavBar() {
         <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 h-full items-center space-x-8">
           <Link 
             href="/" 
-            className={`text-lg ${pathname === '/' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+            className={`text-lg ${pathname === '/' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             Home
           </Link>
           <Link 
             href="/chatbot" 
-            className={`text-lg ${pathname === '/chatbot' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+            className={`text-lg ${pathname === '/chatbot' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             Chatbot
           </Link>
           <Link 
             href="/medication" 
-            className={`text-lg ${pathname === '/medication' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+            className={`text-lg ${pathname === '/medication' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             Medication
           </Link>
           <Link 
             href="/todo" 
-            className={`text-lg ${pathname === '/todo' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] transition-colors duration-200`}
+            className={`text-lg ${pathname === '/todo' ? 'text-red-200 font-bold' : 'text-white'} hover:text-[#ffcccc] hover:scale-105 transition-colors duration-200 font-bold`}
           >
             To-Do List
           </Link>
@@ -68,16 +68,14 @@ export default function NavBar() {
               <Link
                 href="/signin"
                 className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
-                         hover:text-[#ff0000] transition-colors duration-200 shadow-sm
-                         hover:shadow-md"
+                         hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md"
               >
                 Sign In
               </Link>
               <Link
                 href="/signup"
                 className="bg-white text-[#CA0808] px-6 py-2 rounded-full text-lg font-semibold 
-                         hover:text-[#ff0000] transition-colors duration-200 shadow-sm
-                         hover:shadow-md border-2 border-[#CA0808]"
+                         hover:scale-105 transition-transform duration-200 shadow-sm hover:shadow-md border-2 border-[#CA0808]"
               >
                 Sign Up
               </Link>
