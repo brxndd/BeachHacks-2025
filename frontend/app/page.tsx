@@ -33,6 +33,7 @@ export default function Home() {
           </div>
           <div className="text-center mt-8">
             <button className="bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800">Sign Up</button>
+            <button className="bg-[#CA0808] text-white px-6 py-2 rounded-lg hover:bg-red-800">Sign In</button>
           </div>
         </div>
       </main>
