@@ -4,7 +4,7 @@
 
 Heart2Heart is a specialized platform designed to empower patients with heart disease or those at risk. It combines AI-driven guidance, medication tracking, and personalized daily health tasks to improve cardiovascular wellness.
 
-![Heart2Heart Demo](https://via.placeholder.com/800x400?text=Heart2Heart+Demo) *Replace with actual screenshot*
+![Heart2Heart Demo](https://github.com/user-attachments/assets/2e1d8d62-b233-4d3f-b0da-d3571e2a305f)
 
 ## Features ✨
 
