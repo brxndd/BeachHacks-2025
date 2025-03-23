@@ -73,37 +73,37 @@ export default function ChatbotPage() {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
         <NavBar />
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {messages.map((msg, index) => (
-                    <div key={index} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
-                        <div className={`max-w-3xl p-4 rounded-lg ${msg.isBot ? 'bg-white text-gray-800' : 'bg-red-600 text-white'} shadow-sm`}>
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${msg.isBot ? 'bg-blue-100' : 'bg-blue-100'}`}>
-                                    {msg.isBot ? '❤️' : '👤'}
-                                </div>
-                                <span className="font-medium">{msg.isBot ? 'HeartBot' : 'You'}</span>
-                            </div>
-                            <div className="whitespace-pre-wrap">{msg.text}</div>
-                        </div>
+            <div className="flex-1 overflow-y-auto px-32 space-y-4"> 
+              {messages.map((msg, index) => (
+                <div key={index} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
+                  <div className={`max-w-3xl p-4 rounded-lg ${msg.isBot ? 'bg-white text-gray-800' : 'bg-red-600 text-white'} shadow-sm`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${msg.isBot ? 'bg-blue-100' : 'bg-blue-100'}`}>
+                        {msg.isBot ? '❤️' : '👤'}
+                      </div>
+                      <span className="font-medium">{msg.isBot ? 'HeartBot' : 'You'}</span>
                     </div>
-                ))}
-                {isLoading && (
-                    <div className="flex justify-start">
-                        <div className="max-w-3xl p-4 rounded-lg bg-white shadow-sm">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                    ❤️
-                                </div>
-                                <div className="flex space-x-2">
-                                    <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce"></div>
-                                    <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                                    <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="whitespace-pre-wrap">{msg.text}</div>
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="max-w-3xl p-4 rounded-lg bg-white shadow-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                        ❤️
+                      </div>
+                      <div className="flex space-x-2">
+                        <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce"></div>
+                        <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-3 h-3 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                      </div>
                     </div>
-                )}
-                <div ref={messagesEndRef} />
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
             </div>
             
             <div className="border-t p-4 bg-white">
