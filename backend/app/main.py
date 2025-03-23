@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import get_db
 from app.models import User
+from typing import List
 from app.utils import get_password_hash, verify_password
 from app.routers import home, chatbot, medicine, todo  # importing all routers
 
@@ -47,7 +48,6 @@ class UserInput(BaseModel):
 class UserLogin(BaseModel):
     email: str
     password: str
-    conditions: List[str]
 
 class UserSignUp(BaseModel):
     email: str
