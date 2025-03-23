@@ -21,11 +21,24 @@ app.include_router(chatbot.router)
 app.include_router(medicine.router)
 app.include_router(todo.router)
 
-# Original Pydantic model
+
+# pydantic model
+"""
+    FORM will track:
+    - Name 
+    - Age
+    - Biological Sex 
+    - Race 
+    - Conditions 
+"""
+
 class UserInput(BaseModel):
     name: str 
     age: int 
-    prev_condition: bool
+    sex: str 
+    race: str     
+    condition: str 
+
 
 # New authentication models
 class UserLogin(BaseModel):
